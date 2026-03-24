@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ForecastNow — Live Weather App</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Effects Layer -->
+  <div class="effects"></div>
+
+  <div class="app">
+    <header>
+      <h1>🌦️ ForecastNow</h1>
+      <div class="search">
+        <input id="cityInput" type="search" placeholder="Enter city (e.g. New Delhi)" value="New Delhi" />
+        <button id="searchBtn" class="primary">Search</button>
+      </div>
+    </header>
+
+    <main>
+      <section>
+        <div id="currentCard" class="card">
+          <div class="current">
+            <div>
+              <div id="currentCity" class="small">—</div>
+              <div id="currentTemp" class="temp">--°C</div>
+              <div id="currentDesc" class="small">—</div>
+            </div>
+            <div style="margin-left:auto;text-align:right">
+              <div id="currentMeta" class="small">Wind: — | Humidity: —</div>
+              <div id="updateTime" class="small" style="margin-top:6px">Last update: —</div>
+            </div>
+          </div>
+          <div id="forecast" class="forecast"></div>
+        </div>
+        <div id="error" style="color:#b91c1c;margin-top:10px;display:none"></div>
+      </section>
+
+      <aside>
+        <div class="card">
+          <h3 style="margin:0 0 8px 0">⚙️ Settings</h3>
+          <div class="toggle">
+            <label for="units">Units:</label>
+            <select id="units">
+              <option value="c">Celsius (°C)</option>
+              <option value="f">Fahrenheit (°F)</option>
+            </select>
+          </div>
+          <div class="notice">This app uses Open-Meteo to fetch current weather + 7-day forecast.</div>
+          <footer>✨ Enjoy live animated backgrounds!</footer>
+        </div>
+      </aside>
+    </main>
+  </div>
+                
+  <script src="script.js"></script>
+</body>
+</html>

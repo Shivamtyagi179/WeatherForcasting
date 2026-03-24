@@ -1,0 +1,284 @@
+:root {
+  --card:#ffffffcc;
+  --accent:#4f46e5;
+  --muted:#6b7280;
+}
+* { box-sizing:border-box; margin:0; padding:0 }
+body {
+  margin:0;
+  font-family:Inter,system-ui,Arial,Helvetica,sans-serif;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:24px;
+  transition: background 1.2s ease-in-out, color 0.5s;
+  background-size: 200% 200%;
+  overflow:hidden;
+  position:relative;
+}
+.effects {
+  position:fixed;
+  top:0; left:0;
+  width:100%; height:100%;
+  pointer-events:none;
+  overflow:hidden;
+  z-index:0;
+}
+
+/* Animated gradients */
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* Day & Night */
+body.day {
+  background: linear-gradient(120deg, #87ceeb, #fdfbfb);
+  animation: gradientMove 15s ease infinite;
+  color: #0f172a;
+}
+body.night {
+  background: linear-gradient(120deg, #0f2027, #203a43, #2c5364);
+  animation: gradientMove 20s ease infinite;
+  color: #f9f9f9;
+}
+
+/* Weather-specific backgrounds */
+body.sunny {
+  background: linear-gradient(120deg, #fceabb, #f8b500);
+  animation: gradientMove 15s ease infinite;
+}
+body.cloudy {
+  background: linear-gradient(120deg, #bdc3c7, #2c3e50);
+  animation: gradientMove 18s ease infinite;
+}
+body.rainy {
+  background: linear-gradient(120deg, #4e54c8, #2b5876);
+  animation: gradientMove 12s ease infinite;
+}
+body.snowy {
+  background: linear-gradient(120deg, #e0eafc, #cfdef3);
+  animation: gradientMove 20s ease infinite;
+}
+
+/* Effects - Stars */
+body.night .effects::before {
+  content:"";
+  position:absolute;
+  width:200%;
+  height:200%;
+  background:transparent url('https://www.transparenttextures.com/patterns/stardust.png') repeat;
+  animation: gradientMove 60s linear infinite;
+  opacity:0.6;
+}
+
+/* Effects - Sun Glow */
+body.day .effects::before {
+  content:"";
+  position:absolute;
+  width:300px;
+  height:300px;
+  top:60px;
+  left:50%;
+  transform:translateX(-50%);
+  border-radius:50%;
+  background: radial-gradient(circle, rgba(255,223,0,0.7), transparent 70%);
+  animation: pulse 6s infinite alternate;
+}
+@keyframes pulse {
+  from { transform:translateX(-50%) scale(1); opacity:0.7; }
+  to { transform:translateX(-50%) scale(1.2); opacity:0.4; }
+}
+
+/* Effects - Rain */
+body.rainy .effects::before {
+  content:"";
+  position:absolute;
+  top:0; left:0;
+  width:100%; height:100%;
+  background-image: url('https://i.ibb.co/9bQxj7h/rain-drop.png');
+  background-size: 150px;
+  animation: rainMove 1s linear infinite;
+  opacity:0.3;
+}
+@keyframes rainMove {
+  from { background-position: 0 -100px; }
+  to { background-position: 0 100%; }
+}
+
+/* Effects - Snow */
+body.snowy .effects::before {
+  content:"";
+  position:absolute;
+  top:0; left:0;
+  width:100%; height:100%;
+  background-image: url('https://i.ibb.co/3mYyW8J/snowflake.png');
+  background-size: 100px;
+  animation: snowFall 10s linear infinite;
+  opacity:0.5;
+}
+@keyframes snowFall {
+  from { background-position: 0 -100px; }
+  to { background-position: 0 100%; }
+}
+
+/* App UI */
+.app { width:100%; max-width:880px; position:relative; z-index:1 }
+header { display:flex; align-items:center; gap:16px; margin-bottom:18px }
+h1 { margin:0; font-size:24px; color:var(--accent) }
+.search { display:flex; gap:8px; width:100% }
+input[type="search"] {
+  flex:1;
+  padding:12px 14px;
+  border-radius:10px;
+  border:1px solid #e6e9f2;
+  background:#fff;
+  outline:none;
+  font-size:15px;
+}
+button.primary {
+  background:var(--accent);
+  color:#fff;
+  border:none;
+  padding:10px 14px;
+  border-radius:10px;
+  font-weight:600;
+  cursor:pointer;
+}
+main { display:grid; grid-template-columns:1fr 320px; gap:18px }
+.card {
+  background:var(--card);
+  padding:18px;
+  border-radius:14px;
+  box-shadow:0 6px 18px rgba(35,39,50,0.15);
+  backdrop-filter: blur(8px);
+}
+.current { display:flex; align-items:center; gap:18px }
+.temp { font-size:48px; font-weight:700; color:#0f172a }
+.meta { color:var(--muted) }
+.forecast { margin-top:14px; display:flex; gap:10px; overflow:auto }
+.day {
+  min-width:110px;
+  padding:10px;
+  border-radius:10px;
+  border:1px solid #f0f3ff;
+  text-align:center;
+  background: #ffffffcc;
+  backdrop-filter: blur(4px);
+}
+.small { font-size:13px; color:var(--muted) }
+aside .card { position:sticky; top:24px }
+.toggle { display:flex; gap:8px; align-items:center }
+.notice { margin-top:10px; color:#9aa1b2; font-size:13px }
+footer { margin-top:12px; color:var(--muted); font-size:13px }
+@media (max-width:880px) {
+  main { grid-template-columns:1fr }
+  aside { order:2 }
+
+}
+@media (max-width:480px) {
+  .temp { font-size:36px }
+  header { flex-direction:column; align-items:flex-start }
+  .search { flex-direction:column; width:100% }
+  button.primary { width:100% }
+}   
+/* Scrollbar for forecast */
+.forecast::-webkit-scrollbar {
+  height:6px;
+}
+.forecast::-webkit-scrollbar-thumb {
+  background:var(--accent);
+  border-radius:3px;
+}
+.forecast::-webkit-scrollbar-track {
+  background:transparent;
+}
+/* Hide scrollbar for Firefox */
+.forecast {
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent) transparent;
+}   
+/* Hide scrollbar for IE, Edge and Firefox */
+.forecast {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+.forecast::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari and Opera */
+}
+/* Toggle Switch */
+.toggle-switch {
+  position: relative;
+  width: 50px;
+  height: 24px;
+}
+.toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background-color: #ccc;
+  transition: .4s;
+  border-radius: 24px;
+}
+
+.toggle-slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+.toggle-switch input:checked + .toggle-slider {
+  background-color: var(--accent);
+}
+.toggle-switch input:checked + .toggle-slider:before {
+  transform: translateX(26px);
+}
+/* Accessibility Focus */
+input[type="search"]:focus, button.primary:focus {
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.5);
+    }
+button.primary:hover {
+    background: #4338ca;
+    }
+.day button.primary:hover {
+    background: #d97706;
+    }
+.night button.primary:hover {
+    background: #1e40af;
+    }
+.rainy button.primary:hover {
+    background: #1e3a8a;
+    }
+.snowy button.primary:hover {
+
+    background: #3b82f6;
+    }
+.cloudy button.primary:hover {
+    background: #4b5563;
+    }
+.sunny button.primary:hover {
+    background: #b45309;
+    }
+/* Responsive font sizes */
+@media (max-width:600px) {
+  h1 { font-size:20px; }
+  .temp { font-size:32px; }
+}
+@media (max-width:400px) {
+  h1 { font-size:18px; }
+  .temp { font-size:28px; }
+}
+
+/* End of style.css */
